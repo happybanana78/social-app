@@ -1,48 +1,48 @@
 <template>
-    <div class="flex justify-between 
-    text-4xl px-10">
-        <!-- <div class="flex flex-row justify-center space-x-4"> -->
+    <div class="flex justify-between items-center
+    px-10">
+        <div class="flex flex-row justify-center space-x-4 text-2xl">
             <div>
-                <PostLike @add-like="doAddLike"
-                @remove-like="doRemoveLike"
-                :post="post" :user="user" />
+                <PostLike @add-like="doAddLike" @remove-like="doRemoveLike" :post="post" :user="user" />
             </div>
             <div>
                 <PostComment :post="post" />
             </div>
-            <!-- <div class="flex flex-col">
+        </div>
+        <div>
+            <div class="flex flex-col">
                 <PostTime />
-                <UserProfile />
-            </div> -->
-        <!-- </div> -->
+                <UsernameTag :user="user" />
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import PostLike from "./PostLike.vue"
-    import PostComment from "./PostComment.vue"
-    import PostTime from "./PostTime.vue"
-    import UserProfile from "./UserProfile.vue"
-    export default {
-        name: "PostData",
-        components: {
-            PostLike,
-            PostComment,
-            PostTime,
-            UserProfile
+import PostLike from "./PostLike.vue"
+import PostComment from "./PostComment.vue"
+import PostTime from "./PostTime.vue"
+import UsernameTag from "./UsernameTag.vue"
+export default {
+    name: "PostData",
+    components: {
+        PostLike,
+        PostComment,
+        PostTime,
+        UsernameTag
+    },
+    props: {
+        post: Object,
+        user: Object
+    },
+    emits: ['add-like', 'remove-like'],
+    methods: {
+        doAddLike(postInfo) {
+            this.$emit('add-like', postInfo)
         },
-        props: {
-            post: Object,
-            user: Object
-        },
-        emits: ['add-like', 'remove-like'],
-        methods: {
-            doAddLike(postInfo) {
-                this.$emit('add-like', postInfo)
-            },
-            doRemoveLike(postInfo) {
-                this.$emit('remove-like', postInfo)
-            }
+        doRemoveLike(postInfo) {
+            this.$emit('remove-like', postInfo)
         }
     }
+}
 </script>

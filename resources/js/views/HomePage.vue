@@ -3,7 +3,7 @@
         <AppHeader @toggle-profile="toggleProfile" @toggle-settings="toggleSettings" />
         <ToggleProfile :toggle="this.toggleUserProfile" @create-post="
             (this.showCreateModal = true), (this.toggleUserProfile = false)
-        " @close-profile-toggle="toggleProfile" />
+        " @close-profile-toggle="toggleProfile" :user="user" />
         <ToggleSettings :toggle="this.toggleUserSettings" @logout="logout" @close-settings-toggle="toggleSettings" />
         <AppModal :showModal="this.showCreateModal" @close-modal="this.showCreateModal = false">
             <template v-slot:createForm>
