@@ -1,9 +1,10 @@
 <template>
     <div class="absolute top-0 w-full p-10 left-0 right-0 min-h-screen main-bg">
-        <AppHeader @toggle-profile="toggleProfile" />
+        <AppHeader @toggle-profile="toggleProfile" @toggle-settings="toggleSettings" />
         <ToggleProfile :toggle="this.toggleUserProfile" @create-post="
             (this.showCreateModal = true), (this.toggleUserProfile = false)
         " />
+        <ToggleSettings :toggle="this.toggleUserSettings" @toggle-settings="toggleSettings" @logout="logout" />
         <AppModal :showModal="this.showCreateModal" @close-modal="this.showCreateModal = false">
             <template v-slot:createForm>
                 <form @submit.prevent="createPost">
@@ -32,6 +33,7 @@
 import AppHeader from "../components/AppHeader.vue";
 import PostContainer from "../components/PostContainer.vue";
 import ToggleProfile from "../components/ToggleProfile.vue";
+import ToggleSettings from "../components/ToggleSettings.vue";
 import AppModal from "../components/AppModal.vue";
 
 export default {
@@ -40,6 +42,7 @@ export default {
         AppHeader,
         PostContainer,
         ToggleProfile,
+        ToggleSettings,
         AppModal,
     },
     data() {
@@ -48,6 +51,7 @@ export default {
             user: {},
             file: '',
             toggleUserProfile: false,
+            toggleUserSettings: false,
             showCreateModal: false,
             token: localStorage.getItem("token"),
         }
@@ -67,6 +71,9 @@ export default {
         },
         toggleProfile() {
             this.toggleUserProfile = !this.toggleUserProfile;
+        },
+        toggleSettings() {
+            this.toggleUserSettings = !this.toggleUserSettings;
         },
         handleUpload() {
             this.file = this.$refs.file.files[0]
@@ -94,6 +101,13 @@ export default {
                 .catch((errors) => {
                     console.log(errors)
                 })
+        },
+        logout() {
+            if (localStorage.getItem('token')) {
+                localStorage.removeItem('token')
+                //console.log(localStorage.getItem('token'))
+                this.$router.go('/login')
+            }
         }
     },
     mounted() {

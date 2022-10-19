@@ -5,7 +5,7 @@
         <router-link to="/">
             <img src="../assets/logo.png" alt="" width="50" height="50">
         </router-link>
-        <MenuButton />
+        <MenuButton @toggle-settings="onClickToggle" />
     </div>
 </template>
 
@@ -17,6 +17,12 @@
         components: {
             ProfileButton,
             MenuButton
+        },
+        methods: {
+            onClickToggle() {
+                this.$emit('toggle-settings')
+                //console.log('ciao')
+            }
         }
     }
 </script>
