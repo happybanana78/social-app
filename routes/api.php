@@ -26,6 +26,8 @@ Route::post('/users/login', [AuthController::class, 'login']);
 
 Route::post('/posts/like', [PostController::class, 'like']);
 
+Route::post('/posts/create', [PostController::class, 'storePost']);
+
 Route::post('/posts/comment', [PostController::class, 'storeComment']);
 
 Route::get('/posts/comments/{id}', [PostController::class, 'getComments']);

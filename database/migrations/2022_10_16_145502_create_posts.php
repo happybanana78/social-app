@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('img');
             $table->string('time');
             $table->string('userId');
-            $table->text('like')->nullable();
-            $table->text('comments')->nullable();
+            $table->text('like')->default(0);
             $table->timestamps();
         });
     }

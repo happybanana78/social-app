@@ -6,16 +6,16 @@
         " />
         <AppModal :showModal="this.showCreateModal" @close-modal="this.showCreateModal = false">
             <template v-slot:createForm>
-                <form action="">
+                <form @submit.prevent="createPost">
                     <h2 class="text-left text-2xl border-b-2 border-red-300 pb-1 mb-2">
                         Create Post
                     </h2>
                     <div class="flex flex-col space-y-4 text-xl pb-4">
                         <label for="post_img">Choose an Image</label>
-                        <input type="file" name="postImg" />
+                        <input ref="file" type="file" name="postImg" v-on:change="handleUpload" />
                     </div>
                     <div class="text-right border-t-2 border-red-300 pt-4">
-                        <button type="button"
+                        <button type="submit"
                             class="px-3 py-1 text-xl bg-red-300 border-2 border-red-400 text-red-800 hover:bg-red-800 hover:text-red-400 rounded-lg"
                             @click="this.showCreateModal = false">
                             Create
@@ -46,6 +46,7 @@ export default {
         return {
             posts: [],
             user: {},
+            file: '',
             toggleUserProfile: false,
             showCreateModal: false,
             token: localStorage.getItem("token"),
@@ -56,19 +57,56 @@ export default {
             //console.log(postInfo)
             this.posts.forEach((post) => {
                 if (post.id === postInfo.uId) {
-                        axios
-                            .post("/api/posts/like", postInfo)
-                            .catch((error) => {
-                                console.log(error);
-                            });
+                    axios
+                        .post("/api/posts/like", postInfo)
+                        .catch((error) => {
+                            console.log(error);
+                        });
                 }
             });
         },
         toggleProfile() {
             this.toggleUserProfile = !this.toggleUserProfile;
         },
+        handleUpload() {
+            this.file = this.$refs.file.files[0]
+            //console.log(this.file)
+        },
+        createPost() {
+            let formData = new FormData()
+            formData.append('file', this.file)
+            formData.append('userId', this.user.id)
+            axios.post('/api/posts/create', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(() => {
+                axios
+                    .get("/api/posts")
+                    .then((response) => {
+                        this.posts = response.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                //console.log('success')
+            })
+                .catch((errors) => {
+                    console.log(errors)
+                })
+        }
     },
     mounted() {
+        // get current logged in user
+        axios
+            .get("/api/user")
+            .then((response) => {
+                this.user = response.data;
+                this.postUser = this.user.id
+            })
+            .catch((errors) => {
+                console.log(errors);
+            })
         axios
             .get("/api/posts")
             .then((response) => {
@@ -77,15 +115,6 @@ export default {
             .catch((error) => {
                 console.log(error);
             });
-        // get current logged in user
-        axios
-            .get("/api/user")
-            .then((response) => {
-                this.user = response.data;
-            })
-            .catch((errors) => {
-                console.log(errors);
-            })
     },
 };
 </script>

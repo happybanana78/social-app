@@ -1,6 +1,6 @@
 <template>
     <div class="absolute top-0 w-full p-10 left-0 right-0 min-h-screen main-bg">
-        <AppHeader />
+        <CommentsHeader />
         <div class="container mx-auto border-2 border-red-300
         rounded-lg mt-24 py-10 px-20 flex flex-col space-y-5 container-bg
         min-h-screen">
@@ -23,12 +23,11 @@
 </template>
 
 <script>
-import console from "console"
-import AppHeader from "../components/AppHeader.vue"
+import CommentsHeader from "../components/CommentsHeader.vue"
 export default {
     name: 'CommentsPage',
     components: {
-        AppHeader
+        CommentsHeader
     },
     data() {
         return {
@@ -43,6 +42,7 @@ export default {
     },
     methods: {
         sendComment() {
+            //console.log(linkify.find(this.newComment.text)); 
             axios.post('/api/posts/comment', this.newComment)
                 .then((response) => {
                     if (response) {

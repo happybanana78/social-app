@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index() {
-        $user = Post::all();
+        $user = Post::latest()->get();
         return $user;
     }
 
@@ -42,5 +42,29 @@ class PostController extends Controller
             "postId" => $request->input('postId'),
             "text" => $request->input('text')
         ]);
+    }
+
+    public function storePost(Request $request) {
+        //dd($request->input());
+        $posts = Post::latest()->first();
+        $lastPostId = $posts->id;
+
+        $fileName = $_FILES["file"]["name"];
+        $fileTempName = $_FILES["file"]["tmp_name"];
+        $fileSize = $_FILES["file"]["size"];
+        $fileError = $_FILES["file"]["error"];
+
+        if ($fileSize < 1000000) {
+            $newFileName = $lastPostId + 1 . "_" . $fileName;
+            $fileDestinationPath = $_SERVER['DOCUMENT_ROOT'] . "/images/uploads/" . $newFileName;
+            move_uploaded_file($fileTempName, $fileDestinationPath);
+            Post::create([
+                "img" => $newFileName,
+                "time" => date("Y-m-d"),
+                "userId" => $request->input('userId')
+            ]);
+        }
+
+        //dd($file);
     }
 }
