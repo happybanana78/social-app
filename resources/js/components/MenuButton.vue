@@ -14,6 +14,7 @@
                 this.$emit('toggle-settings')
                 //console.log('ciao')
             }
-        }
+        },
+        emits: ['toggle-settings']
     }
 </script>

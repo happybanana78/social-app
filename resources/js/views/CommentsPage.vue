@@ -43,21 +43,23 @@ export default {
     methods: {
         sendComment() {
             //console.log(linkify.find(this.newComment.text)); 
-            axios.post('/api/posts/comment', this.newComment)
-                .then((response) => {
-                    if (response) {
-                        axios.get('/api/posts/comments/' + this.$route.params.id)
-                            .then((response) => {
-                                this.comments = response.data
-                            }).catch((error) => {
-                                console.log(error)
-                            })
-                    }
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-            this.newComment.text = ''
+            if (this.newComment.text) {
+                axios.post('/api/posts/comment', this.newComment)
+                    .then((response) => {
+                        if (response) {
+                            axios.get('/api/posts/comments/' + this.$route.params.id)
+                                .then((response) => {
+                                    this.comments = response.data
+                                }).catch((error) => {
+                                    console.log(error)
+                                })
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+                this.newComment.text = ''
+            }
         }
     },
     mounted() {

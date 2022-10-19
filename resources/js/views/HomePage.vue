@@ -3,8 +3,8 @@
         <AppHeader @toggle-profile="toggleProfile" @toggle-settings="toggleSettings" />
         <ToggleProfile :toggle="this.toggleUserProfile" @create-post="
             (this.showCreateModal = true), (this.toggleUserProfile = false)
-        " />
-        <ToggleSettings :toggle="this.toggleUserSettings" @toggle-settings="toggleSettings" @logout="logout" />
+        " @close-profile-toggle="toggleProfile" />
+        <ToggleSettings :toggle="this.toggleUserSettings" @logout="logout" @close-settings-toggle="toggleSettings" />
         <AppModal :showModal="this.showCreateModal" @close-modal="this.showCreateModal = false">
             <template v-slot:createForm>
                 <form @submit.prevent="createPost">
@@ -113,7 +113,11 @@ export default {
     mounted() {
         // get current logged in user
         axios
-            .get("/api/user")
+            .get("/api/user", {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then((response) => {
                 this.user = response.data;
                 this.postUser = this.user.id
