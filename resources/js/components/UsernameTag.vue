@@ -1,5 +1,5 @@
 <template>
-    <div class="text-md">
+    <div class="text-md cursor-pointer">
         <router-link :to="'/profile/' + user.username">
             <b>{{user.username}}</b>
         </router-link>

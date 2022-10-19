@@ -4,7 +4,7 @@
         <div class="container mx-auto border-2 border-red-300
         rounded-lg mt-24 py-10 px-20 flex flex-col space-y-5 container-bg
         min-h-screen">
-            <div class="container mx-auto max-h-96 overflow-auto
+            <div class="container mx-auto h-96 max-h-96 overflow-auto
             p-5 flex flex-col-reverse">
                 <div class="flex flex-col space-y-5">
                     <div v-for="comment in this.comments" class="bg-red-300 px-4 py-2 rounded-full">
@@ -72,7 +72,11 @@ export default {
             })
         // get current logged in user
         axios
-            .get("/api/user")
+            .get("/api/user" ,{
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then((response) => {
                 this.user = response.data;
                 this.newComment.userId = this.user.id

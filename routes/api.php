@@ -24,6 +24,8 @@ Route::post('/users/register', [AuthController::class, 'create']);
 
 Route::post('/users/login', [AuthController::class, 'login']);
 
+Route::post('/users/profile', [AuthController::class, 'changeProfile']);
+
 Route::post('/posts/like', [PostController::class, 'like']);
 
 Route::post('/posts/create', [PostController::class, 'storePost']);

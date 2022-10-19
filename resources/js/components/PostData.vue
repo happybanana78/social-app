@@ -10,9 +10,9 @@
             </div>
         </div>
         <div>
-            <div class="flex flex-col">
-                <PostTime />
+            <div class="flex flex-col text-center">
                 <UsernameTag :user="user" />
+                <PostTime :post="post" />
             </div>
         </div>
     </div>

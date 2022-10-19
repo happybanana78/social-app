@@ -46,8 +46,12 @@ class PostController extends Controller
 
     public function storePost(Request $request) {
         //dd($request->input());
-        $posts = Post::latest()->first();
-        $lastPostId = $posts->id;
+        $lastPostId = 0;
+
+        if (Post::latest()->first()) {
+            $posts = Post::latest()->first();
+            $lastPostId = $posts->id;
+        }
 
         $fileName = $_FILES["file"]["name"];
         $fileTempName = $_FILES["file"]["tmp_name"];

@@ -42,5 +42,23 @@ class AuthController extends Controller
      
         return $user->createToken($request->username)->plainTextToken;
     }
+
+    public function changeProfile(Request $request) {
+        $user = User::find($request->input('userId'));
+
+        $fileName = $_FILES["file"]["name"];
+        $fileTempName = $_FILES["file"]["tmp_name"];
+        $fileSize = $_FILES["file"]["size"];
+        $fileError = $_FILES["file"]["error"];
+
+        if ($fileSize < 1000000) {
+            $newFileName = $user->username . "_" . rand(0, 10000) . "." . explode(".", $fileName)[1];
+            $fileDestinationPath = $_SERVER['DOCUMENT_ROOT'] . "/images/profile/" . $newFileName;
+            move_uploaded_file($fileTempName, $fileDestinationPath);
+            $user->profileImg = $newFileName;
+            $user->update();
+            return response()->json($newFileName);
+        }
+    }
     
 }
