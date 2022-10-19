@@ -7,13 +7,13 @@ import NotFoundPage from "../views/404Page.vue";
 
 const routes = [
     // Main routes
-    {   
+    {
         path: "/",
         name: "HomePage",
         component: HomePage,
         meta: {
             requiresAuth: true
-          }
+        }
     },
     {
         path: "/signup",
@@ -24,6 +24,9 @@ const routes = [
         path: "/login",
         name: "LoginPage",
         component: LoginPage,
+        meta: {
+            hideForAuth: true
+        }
     },
     // Comments page
     {
@@ -41,8 +44,8 @@ const routes = [
 
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 });
 
 export default router;
