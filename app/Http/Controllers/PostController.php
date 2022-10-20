@@ -70,6 +70,15 @@ class PostController extends Controller
         //dd($file);
     }
 
+    public function deletePost(Request $request) {
+        //dd($request->input());
+        $post = Post::find($request->input('id'));
+
+        $post->delete();
+
+        return response()->json('post deleted');
+    }
+
     public function getUserPosts($id) {
         $posts = Post::where('userId', $id)->get();
         

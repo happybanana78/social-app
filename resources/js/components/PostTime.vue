@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="text-red-500">
         <p>{{post.time}}</p>
     </div>
 </template>

@@ -11,7 +11,7 @@
         </div>
         <div>
             <div class="flex flex-col text-center">
-                <UsernameTag :user="user" :post="post" />
+                <UsernameTag @post-username="doPostUsername" :user="user" :post="post" />
                 <PostTime :post="post" />
             </div>
         </div>
@@ -35,13 +35,17 @@ export default {
         post: Object,
         user: Object
     },
-    emits: ['add-like', 'remove-like'],
+    emits: ['add-like', 'remove-like', 'post-username'],
     methods: {
         doAddLike(postInfo) {
             this.$emit('add-like', postInfo)
         },
         doRemoveLike(postInfo) {
             this.$emit('remove-like', postInfo)
+        },
+        doPostUsername(user) {
+            //console.log(user)
+            this.$emit('post-username', user)
         }
     }
 }

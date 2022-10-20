@@ -1,9 +1,9 @@
 <template>
     <div v-if="!this.likes.includes(this.userId)">
-        <i @click="doLike" class="fa-regular fa-heart cursor-pointer"></i>
+        <i @click="doLike" class="fa-regular fa-heart cursor-pointer text-red-500"></i>
     </div>
     <div v-if="this.likes.includes(this.userId)">
-        <i @click="removeLike" class="fa-solid fa-heart cursor-pointer"></i>
+        <i @click="removeLike" class="fa-solid fa-heart cursor-pointer text-red-500"></i>
     </div>
 </template>
 

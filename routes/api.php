@@ -36,6 +36,8 @@ Route::post('/posts/like', [PostController::class, 'like']);
 
 Route::post('/posts/create', [PostController::class, 'storePost']);
 
+Route::post('/posts/delete', [PostController::class, 'deletePost']);
+
 Route::post('/posts/comment', [PostController::class, 'storeComment']);
 
 Route::get('/posts/comments/{id}', [PostController::class, 'getComments']);

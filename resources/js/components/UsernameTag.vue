@@ -1,5 +1,5 @@
 <template>
-    <div class="text-md cursor-pointer">
+    <div class="text-md cursor-pointer text-red-500">
         <router-link :to="'/profile/' + this.postUser.username">
             <b>{{this.postUser.username}}</b>
         </router-link>
@@ -20,6 +20,7 @@
                 postUser: Object
             }
         },
+        emits: ['post-username'],
         mounted() {
             axios.post('/api/users', this.user)
             .then((response) => {
@@ -28,6 +29,10 @@
             }).catch((error) => {
                 console.log(error)
             })
+        },
+        beforeUpdate() {
+            //console.log(this.postUser.username)
+            this.$emit('post-username', this.postUser.username)
         }
     }
 </script>

@@ -25,7 +25,7 @@
                 </form>
             </template>
         </AppModal>
-        <PostContainer @remove-like="like" @add-like="like" :posts="posts" :user="user" />
+        <PostContainer @remove-like="like" @add-like="like" @delete-post="deletePost" :posts="posts" :user="user" />
     </div>
 </template>
 
@@ -35,6 +35,7 @@ import PostContainer from "../components/PostContainer.vue";
 import ToggleProfile from "../components/ToggleProfile.vue";
 import ToggleSettings from "../components/ToggleSettings.vue";
 import AppModal from "../components/AppModal.vue";
+import axios from "axios";
 
 export default {
     name: "HomePage",
@@ -101,6 +102,36 @@ export default {
                 .catch((errors) => {
                     console.log(errors)
                 })
+        },
+        deletePost(postId, userId) {
+            // console.log(userId)
+            // console.log(this.user.id)
+            if (this.user.id == userId) {
+                const postInfo = {
+                    id: postId
+                }
+                axios.post('/api/posts/delete', postInfo)
+                    .then((response) => {
+                        //console.log(response.data)
+                        if (response.data == 'post deleted') {
+                            axios
+                                .get("/api/posts")
+                                .then((response) => {
+                                    this.posts = response.data;
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                });
+                            console.log('post deleted')
+                        } else {
+                            console.log('Post not deleted, not your post!')
+                        }
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+            } else {
+                console.log('Post not deleted, not your post!')
+            }
         },
         logout() {
             if (localStorage.getItem('token')) {
