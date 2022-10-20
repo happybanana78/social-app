@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row justify-between items-center p-5 rounded-lg
-    bg-header fixed left-5 right-5 top-0">
+    bg-header fixed left-5 right-5 top-0 z-30">
         <router-link to="/">
             <div class="text-3xl bg-white rounded-full text-black w-10 h-10
             items-center flex justify-center">

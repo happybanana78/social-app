@@ -21,12 +21,10 @@ class PostController extends Controller
         $likeArray = $request->input('likes');
         $dbLikes = explode(",", $post->like);
 
-        //dd($dbLikes);
+        //dd($likeArray);
 
-        if (!in_array($request->input('uId'), $dbLikes)) {
-            $post->like = implode(',', $likeArray);
-            $post->update();
-        }
+        $post->like = implode(',', $likeArray);
+        $post->update();
     }
 
     public function getComments($id) {
@@ -70,5 +68,11 @@ class PostController extends Controller
         }
 
         //dd($file);
+    }
+
+    public function getUserPosts($id) {
+        $posts = Post::where('userId', $id)->get();
+        
+        return response()->json($posts);
     }
 }

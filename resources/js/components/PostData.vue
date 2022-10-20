@@ -11,7 +11,7 @@
         </div>
         <div>
             <div class="flex flex-col text-center">
-                <UsernameTag :user="user" />
+                <UsernameTag :user="user" :post="post" />
                 <PostTime :post="post" />
             </div>
         </div>

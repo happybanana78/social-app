@@ -10,6 +10,22 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function getPostUser(Request $request) {
+        //dd($request->input());
+        $users = User::find($request->input('userId'));
+
+        return response()->json($users);
+    }
+
+    public function getUserByUsername(Request $request) {
+        $user = User::where('username', $request->input('username'))->get();
+
+        //dd($user);
+
+        return response()->json($user);
+
+    }
+
     public function create(Request $request)
     {
         $data = $request->validate([
@@ -52,7 +68,7 @@ class AuthController extends Controller
         $fileError = $_FILES["file"]["error"];
 
         if ($fileSize < 1000000) {
-            $newFileName = $user->username . "_" . rand(0, 10000) . "." . explode(".", $fileName)[1];
+            $newFileName = $user->username . "." . explode(".", $fileName)[1];
             $fileDestinationPath = $_SERVER['DOCUMENT_ROOT'] . "/images/profile/" . $newFileName;
             move_uploaded_file($fileTempName, $fileDestinationPath);
             $user->profileImg = $newFileName;

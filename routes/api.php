@@ -20,11 +20,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/users', [AuthController::class, 'getPostUser']);
+
+Route::post('/users/byname', [AuthController::class, 'getUserByUsername']);
+
 Route::post('/users/register', [AuthController::class, 'create']);
 
 Route::post('/users/login', [AuthController::class, 'login']);
 
 Route::post('/users/profile', [AuthController::class, 'changeProfile']);
+
+Route::get('/posts', [PostController::class, 'index']);
 
 Route::post('/posts/like', [PostController::class, 'like']);
 
@@ -34,4 +40,4 @@ Route::post('/posts/comment', [PostController::class, 'storeComment']);
 
 Route::get('/posts/comments/{id}', [PostController::class, 'getComments']);
 
-Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{id}', [PostController::class, 'getUserPosts']);
