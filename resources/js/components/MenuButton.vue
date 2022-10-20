@@ -1,6 +1,6 @@
 <template>
     <div class="text-3xl text-black w-10 h-10
-    items-center flex justify-center">
+    items-center flex justify-center text-red-600">
         <i @click="onClickToggle" 
         class="fa-solid fa-bars cursor-pointer"></i>
     </div>

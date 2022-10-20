@@ -3,7 +3,7 @@
     <div class="fixed toggle-profile-bg top-24 left-16 p-10
     flex flex-row justify-center items-center w-80 border-2 border-red-200
     rounded-lg" v-show="toggle">
-        <div class="flex flex-col text-xl space-y-4">
+        <div class="flex flex-col text-xl space-y-4 text-red-500">
             <router-link :to="'/profile/' + user.username">
                 <b class="cursor-pointer">Profile</b>
             </router-link>
