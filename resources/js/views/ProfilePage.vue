@@ -12,7 +12,9 @@
             <div
                 class="flex items-center w-full p-5 justify-between border-b-2 border-red-300 mb-10"
             >
-                <div class="w-48 h-48 rounded-full relative overflow-hidden">
+                <!-- profile img for profile owners -->
+                <div class="w-48 h-48 rounded-full relative overflow-hidden"
+                v-if="this.sessionUser.id == this.user.id">
                     <img
                         :src="this.profileImg"
                         onclick="document.getElementById('imgUpload').click()"
@@ -27,6 +29,14 @@
                             v-on:change="changeProfile"
                         />
                     </form>
+                </div>
+                <!-- profile img for guests -->
+                <div class="w-48 h-48 rounded-full relative overflow-hidden"
+                v-if="this.sessionUser.id != this.user.id">
+                    <img
+                        :src="this.profileImg"
+                        class="w-full absolute top-1/2 -translate-y-1/2 left-0 right-0 bottom-0 z-10"
+                    />
                 </div>
                 <div class="text-4xl">
                     {{ this.user.username }}
@@ -174,7 +184,11 @@ export default {
         axios
             .post("/api/users/byname", profileUser)
             .then((response) => {
-                this.user = response.data[0];
+                console.log(response.data)
+                if (response.data == 'user not found') {
+                    this.$router.push("/")
+                }
+                this.user = response.data;
                 //console.log(this.user)
                 this.profileImg = "/images/profile/" + this.user.profileImg;
                 axios

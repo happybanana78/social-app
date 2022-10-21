@@ -49,7 +49,7 @@ export default {
                 //console.log(user)
                 axios.post('/api/users/byname', userData)
                 .then((response) => {
-                    this.postUser = response.data[0]
+                    this.postUser = response.data
                     //console.log(this.postUser[0])
                 }).catch((error) => {
                     console.log(error)

@@ -18,12 +18,13 @@ class AuthController extends Controller
     }
 
     public function getUserByUsername(Request $request) {
-        $user = User::where('username', $request->input('username'))->get();
+        $user = User::where('username', $request->input('username'))->first();
 
-        //dd($user);
-
-        return response()->json($user);
-
+        if (is_null($user)) {
+            return response()->json('user not found');
+        } else {
+            return response()->json($user);
+        }
     }
 
     public function create(Request $request)
