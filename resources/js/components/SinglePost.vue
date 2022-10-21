@@ -1,6 +1,6 @@
 <template>
     <div class="border-2 border-red-300
-    rounded-lg post-bg flex flex-col space-y-2 py-1">
+    rounded-lg post-bg flex flex-col space-y-2 overflow-hidden">
         <div class="text-3xl text-right mr-3 text-red-400" v-if="this.user.id == this.postUser.id">
             <i class="fa-solid fa-xmark cursor-pointer" @click="doDeletePost"></i>
         </div>

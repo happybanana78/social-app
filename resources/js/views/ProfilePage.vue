@@ -45,8 +45,8 @@
             <div>
                 <div v-for="post in this.userPosts">
                     <div
-                        class="border-2 border-red-300 rounded-lg post-bg flex flex-col space-y-2 py-2 mb-5"
-                    >
+                        class="border-2 border-red-300 rounded-lg post-bg flex flex-col pb-2 mb-5
+                        overflow-hidden">
                         <div
                             class="text-3xl text-right mr-3 text-red-400"
                             v-if="this.sessionUser.id == this.user.id"
@@ -60,7 +60,7 @@
                             <img
                                 :src="`/images/uploads/${post.img}`"
                                 alt=""
-                                class="w-full"
+                                class="w-full mb-2"
                             />
                         </div>
                         <PostData
