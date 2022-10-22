@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto border-2 border-red-300
-    rounded-lg mt-24 py-10 px-40 flex flex-col space-y-5 container-bg
+    rounded-lg mt-24 py-10 px-10 sm:px-20 md:px-40 xl:px-80 flex flex-col space-y-5 container-bg
     min-h-screen">
         <div v-for="post in posts" :key="post.id">
             <SinglePost @remove-like="doRemoveLike" @add-like="doAddLike" :post="post"

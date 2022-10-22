@@ -1,6 +1,7 @@
 <template>
     <div class="fixed w-full h-screen top-0 left-0" v-show="toggle" @click="this.$emit('close-profile-toggle')"></div>
-    <div class="fixed toggle-profile-bg top-24 left-16 p-10
+    <div class="fixed toggle-profile-bg top-24 sm:left-16 left-1/2 -translate-x-1/2 p-10
+    sm:translate-x-0
     flex flex-row justify-center items-center w-80 border-2 border-red-200
     rounded-lg" v-show="toggle">
         <div class="flex flex-col text-xl space-y-4 text-red-500">
