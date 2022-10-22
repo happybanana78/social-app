@@ -9,11 +9,10 @@
         <LoadingSpinner v-if="this.loading" />
         <div
             v-show="!this.loading"
-            class="container mx-auto border-2 border-red-300 rounded-lg mt-24 py-10 px-20 flex flex-col space-y-5 container-bg min-h-screen"
+            class="container mx-auto border-2 border-red-300 rounded-lg mt-24 py-10 px-10 md:px-20 flex flex-col space-y-5 container-bg min-h-screen"
         >
-            <div
-                class="flex items-center w-full p-5 justify-between border-b-2 border-red-300 mb-10"
-            >
+            <div class="flex flex-col sm:flex-row items-center w-full p-5 justify-between border-b-2 
+            border-red-300 mb-10 space-y-4 sm:space-y-0">
                 <!-- profile img for profile owners -->
                 <div
                     class="w-48 h-48 rounded-full relative overflow-hidden"
