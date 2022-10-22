@@ -6,15 +6,19 @@
             @logout="logout"
             @close-settings-toggle="toggleSettings"
         />
+        <LoadingSpinner v-if="this.loading" />
         <div
+            v-show="!this.loading"
             class="container mx-auto border-2 border-red-300 rounded-lg mt-24 py-10 px-20 flex flex-col space-y-5 container-bg min-h-screen"
         >
             <div
                 class="flex items-center w-full p-5 justify-between border-b-2 border-red-300 mb-10"
             >
                 <!-- profile img for profile owners -->
-                <div class="w-48 h-48 rounded-full relative overflow-hidden"
-                v-if="this.sessionUser.id == this.user.id">
+                <div
+                    class="w-48 h-48 rounded-full relative overflow-hidden"
+                    v-if="this.sessionUser.id == this.user.id"
+                >
                     <img
                         :src="this.profileImg"
                         onclick="document.getElementById('imgUpload').click()"
@@ -31,8 +35,10 @@
                     </form>
                 </div>
                 <!-- profile img for guests -->
-                <div class="w-48 h-48 rounded-full relative overflow-hidden"
-                v-if="this.sessionUser.id != this.user.id">
+                <div
+                    class="w-48 h-48 rounded-full relative overflow-hidden"
+                    v-if="this.sessionUser.id != this.user.id"
+                >
                     <img
                         :src="this.profileImg"
                         class="w-full absolute top-1/2 -translate-y-1/2 left-0 right-0 bottom-0 z-10"
@@ -45,8 +51,8 @@
             <div>
                 <div v-for="post in this.userPosts">
                     <div
-                        class="border-2 border-red-300 rounded-lg post-bg flex flex-col pb-2 mb-5
-                        overflow-hidden">
+                        class="border-2 border-red-300 rounded-lg post-bg flex flex-col pb-2 mb-5 overflow-hidden"
+                    >
                         <div
                             class="text-3xl text-right mr-3 text-red-400"
                             v-if="this.sessionUser.id == this.user.id"
@@ -80,12 +86,14 @@
 import ProfileHeader from "../components/ProfileHeader.vue";
 import ToggleSettings from "../components/ToggleSettings.vue";
 import PostData from "../components/PostData.vue";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
 export default {
     name: "ProfilePage",
     components: {
         ProfileHeader,
         ToggleSettings,
         PostData,
+        LoadingSpinner,
     },
     data() {
         return {
@@ -95,6 +103,7 @@ export default {
             toggleUserSettings: false,
             file: "",
             profileImg: true,
+            loading: true,
         };
     },
     methods: {
@@ -184,9 +193,9 @@ export default {
         axios
             .post("/api/users/byname", profileUser)
             .then((response) => {
-                console.log(response.data)
-                if (response.data == 'user not found') {
-                    this.$router.push("/")
+                //console.log(response.data);
+                if (response.data == "user not found") {
+                    this.$router.push("/");
                 }
                 this.user = response.data;
                 //console.log(this.user)
@@ -195,6 +204,9 @@ export default {
                     .get("/api/posts/" + this.user.id)
                     .then((response) => {
                         this.userPosts = response.data;
+                        setTimeout(() => {
+                            this.loading = false;
+                        }, 1000);
                         //console.log(this.userPosts)
                     })
                     .catch((error) => {

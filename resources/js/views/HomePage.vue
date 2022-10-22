@@ -25,7 +25,9 @@
                 </form>
             </template>
         </AppModal>
-        <PostContainer @remove-like="like" @add-like="like" @delete-post="deletePost" :posts="posts" :user="user" />
+        <LoadingSpinner v-if="this.loading" />
+        <PostContainer v-show="!this.loading"
+        @remove-like="like" @add-like="like" @delete-post="deletePost" :posts="posts" :user="user" />
     </div>
 </template>
 
@@ -35,7 +37,7 @@ import PostContainer from "../components/PostContainer.vue";
 import ToggleProfile from "../components/ToggleProfile.vue";
 import ToggleSettings from "../components/ToggleSettings.vue";
 import AppModal from "../components/AppModal.vue";
-import axios from "axios";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
 
 export default {
     name: "HomePage",
@@ -45,6 +47,7 @@ export default {
         ToggleProfile,
         ToggleSettings,
         AppModal,
+        LoadingSpinner
     },
     data() {
         return {
@@ -55,6 +58,7 @@ export default {
             toggleUserSettings: false,
             showCreateModal: false,
             token: localStorage.getItem("token"),
+            loading: true
         }
     },
     methods: {
@@ -160,6 +164,9 @@ export default {
             .get("/api/posts")
             .then((response) => {
                 this.posts = response.data;
+                setTimeout(() => {
+                    this.loading = false
+                }, 2000)
             })
             .catch((error) => {
                 console.log(error);
