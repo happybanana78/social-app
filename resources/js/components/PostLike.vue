@@ -1,9 +1,9 @@
 <template>
     <div v-if="!this.likes.includes(this.userId)">
-        <i @click="doLike" class="fa-regular fa-heart cursor-pointer text-red-500"></i>
+        <div @click="doLike" class="cursor-pointer" id="notLiked"></div>
     </div>
     <div v-if="this.likes.includes(this.userId)">
-        <i @click="removeLike" class="fa-solid fa-heart cursor-pointer text-red-500"></i>
+        <div @click="removeLike" class="cursor-pointer" id="liked"></div>
     </div>
 </template>
 
@@ -52,3 +52,31 @@
         },
     }
 </script>
+
+<style>
+#notLiked {
+    background-image:url( 'https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png');
+    background-position: left;
+    background-repeat:no-repeat;
+    background-size:2900%;
+    height: 80px;
+    width: 80px;
+}
+#liked {
+    background-image:url( 'https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png');
+    background-position: left;
+    background-repeat:no-repeat;
+    background-size:2900%;
+    height: 80px;
+    width: 80px;
+    animation: like 0.8s steps(28) forwards;
+}
+#liked:hover {
+    background-position:right;
+}
+
+@keyframes like {
+    from {background-position:left;}
+    to { background-position:right;}
+}
+</style>

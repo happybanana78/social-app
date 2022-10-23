@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col sm:flex-row justify-between items-center
     px-10 pb-2">
-        <div class="flex flex-row justify-center space-x-4 text-xl sm:text-2xl">
+        <div class="flex flex-row justify-center text-2xl sm:text-2xl">
             <div>
                 <PostLike @add-like="doAddLike" @remove-like="doRemoveLike" :post="post" :user="user" />
             </div>
