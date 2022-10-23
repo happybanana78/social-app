@@ -2,7 +2,7 @@
     <div>
         <router-link :to="{name: 'CommentsPage', params: {id: post.id}}">
             <div class="comment">
-                <i class="fa-solid fa-comment cursor-pointer text-red-400 comment-icon"></i>
+                <i class="fa-solid fa-comment cursor-pointer text-red-400 comment-icon z-0"></i>
             </div>
         </router-link>
     </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="fixed create-post-under-bg top-0 left-0
-        h-screen w-full flex justify-center items-center"
+        h-screen w-full flex justify-center items-center z-20"
         @click.self="this.$emit('close-modal')"
         v-show="this.showModal">
             <div class="create-post-bg border-2 rounded-lg z-30

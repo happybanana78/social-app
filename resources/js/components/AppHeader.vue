@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row justify-between items-center p-5 rounded-lg
-    bg-header fixed left-5 right-5 top-0">
+    bg-header fixed left-5 right-5 top-0 z-10">
         <ProfileButton />
         <router-link to="/">
             <img src="../assets/logo.png" alt="" width="50" height="50">
