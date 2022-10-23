@@ -1,10 +1,8 @@
 <template>
     <div class="absolute top-0 w-full p-10 left-0 right-0 min-h-screen main-bg">
-        <ProfileHeader @toggle-settings="toggleSettings" />
+        <ProfileHeader />
         <ToggleSettings
-            :toggle="this.toggleUserSettings"
             @logout="logout"
-            @close-settings-toggle="toggleSettings"
         />
         <LoadingSpinner v-if="this.loading" />
         <div
@@ -99,16 +97,12 @@ export default {
             user: {},
             sessionUser: {},
             userPosts: [],
-            toggleUserSettings: false,
             file: "",
             profileImg: true,
             loading: true,
         };
     },
     methods: {
-        toggleSettings() {
-            this.toggleUserSettings = !this.toggleUserSettings;
-        },
         changeProfile() {
             this.file = this.$refs.file.files[0];
             //console.log(this.file)

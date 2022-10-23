@@ -1,24 +1,39 @@
 <template>
     <div class="absolute top-0 w-full p-10 left-0 right-0 min-h-screen main-bg">
-        <AppHeader @toggle-profile="toggleProfile" @toggle-settings="toggleSettings" />
-        <ToggleProfile :toggle="this.toggleUserProfile" @create-post="
-            (this.showCreateModal = true), (this.toggleUserProfile = false)
-        " @close-profile-toggle="toggleProfile" :user="user" />
-        <ToggleSettings :toggle="this.toggleUserSettings" @logout="logout" @close-settings-toggle="toggleSettings" />
-        <AppModal :showModal="this.showCreateModal" @close-modal="this.showCreateModal = false">
+        <AppHeader />
+        <ToggleProfile
+            @create-post="this.showCreateModal = true"
+            :user="user"
+        />
+        <ToggleSettings
+            @logout="logout"
+        />
+        <AppModal
+            :showModal="this.showCreateModal"
+            @close-modal="this.showCreateModal = false"
+        >
             <template v-slot:createForm>
                 <form @submit.prevent="createPost">
-                    <h2 class="text-left text-2xl border-b-2 border-red-300 pb-1 mb-2">
+                    <h2
+                        class="text-left text-2xl border-b-2 border-red-300 pb-1 mb-2"
+                    >
                         Create Post
                     </h2>
                     <div class="flex flex-col space-y-4 text-xl pb-4">
                         <label for="post_img">Choose an Image</label>
-                        <input ref="file" type="file" name="postImg" v-on:change="handleUpload" />
+                        <input
+                            ref="file"
+                            type="file"
+                            name="postImg"
+                            v-on:change="handleUpload"
+                        />
                     </div>
                     <div class="text-right border-t-2 border-red-300 pt-4">
-                        <button type="submit"
+                        <button
+                            type="submit"
                             class="px-3 py-1 text-xl bg-red-300 border-2 border-red-400 text-red-800 hover:bg-red-800 hover:text-red-400 rounded-lg"
-                            @click="this.showCreateModal = false">
+                            @click="this.showCreateModal = false"
+                        >
                             Create
                         </button>
                     </div>
@@ -26,8 +41,14 @@
             </template>
         </AppModal>
         <LoadingSpinner v-if="this.loading" />
-        <PostContainer v-show="!this.loading"
-        @remove-like="like" @add-like="like" @delete-post="deletePost" :posts="posts" :user="user" />
+        <PostContainer
+            v-show="!this.loading"
+            @remove-like="like"
+            @add-like="like"
+            @delete-post="deletePost"
+            :posts="posts"
+            :user="user"
+        />
     </div>
 </template>
 
@@ -47,77 +68,70 @@ export default {
         ToggleProfile,
         ToggleSettings,
         AppModal,
-        LoadingSpinner
+        LoadingSpinner,
     },
     data() {
         return {
             posts: [],
             user: {},
-            file: '',
-            toggleUserProfile: false,
-            toggleUserSettings: false,
+            file: "",
             showCreateModal: false,
             token: localStorage.getItem("token"),
-            loading: true
-        }
+            loading: true,
+        };
     },
     methods: {
         like(postInfo) {
             //console.log(postInfo)
             this.posts.forEach((post) => {
                 if (post.id === postInfo.uId) {
-                    axios
-                        .post("/api/posts/like", postInfo)
-                        .catch((error) => {
-                            console.log(error);
-                        });
+                    axios.post("/api/posts/like", postInfo).catch((error) => {
+                        console.log(error);
+                    });
                 }
             });
         },
-        toggleProfile() {
-            this.toggleUserProfile = !this.toggleUserProfile;
-        },
-        toggleSettings() {
-            this.toggleUserSettings = !this.toggleUserSettings;
-        },
         handleUpload() {
-            this.file = this.$refs.file.files[0]
+            this.file = this.$refs.file.files[0];
             //console.log(this.file)
         },
         createPost() {
-            let formData = new FormData()
-            formData.append('file', this.file)
-            formData.append('userId', this.user.id)
-            axios.post('/api/posts/create', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(() => {
-                axios
-                    .get("/api/posts")
-                    .then((response) => {
-                        this.posts = response.data;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-                //console.log('success')
-            })
-                .catch((errors) => {
-                    console.log(errors)
+            let formData = new FormData();
+            formData.append("file", this.file);
+            formData.append("userId", this.user.id);
+            axios
+                .post("/api/posts/create", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
                 })
+                .then(() => {
+                    axios
+                        .get("/api/posts")
+                        .then((response) => {
+                            this.posts = response.data;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                    //console.log('success')
+                })
+                .catch((errors) => {
+                    console.log(errors);
+                });
         },
         deletePost(postId, userId) {
             // console.log(userId)
             // console.log(this.user.id)
             if (this.user.id == userId) {
                 const postInfo = {
-                    id: postId
-                }
-                axios.post('/api/posts/delete', postInfo)
+                    id: postId,
+                };
+                axios
+                    .post("/api/posts/delete", postInfo)
                     .then((response) => {
                         //console.log(response.data)
-                        if (response.data == 'post deleted') {
+                        if (response.data == "post deleted") {
                             axios
                                 .get("/api/posts")
                                 .then((response) => {
@@ -126,47 +140,48 @@ export default {
                                 .catch((error) => {
                                     console.log(error);
                                 });
-                            console.log('post deleted')
+                            console.log("post deleted");
                         } else {
-                            console.log('Post not deleted, not your post!')
+                            console.log("Post not deleted, not your post!");
                         }
-                    }).catch((error) => {
-                        console.log(error)
                     })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             } else {
-                console.log('Post not deleted, not your post!')
+                console.log("Post not deleted, not your post!");
             }
         },
         logout() {
-            if (localStorage.getItem('token')) {
-                localStorage.removeItem('token')
+            if (localStorage.getItem("token")) {
+                localStorage.removeItem("token");
                 //console.log(localStorage.getItem('token'))
-                this.$router.go('/login')
+                this.$router.go("/login");
             }
-        }
+        },
     },
     mounted() {
         // get current logged in user
         axios
             .get("/api/user", {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
             })
             .then((response) => {
                 this.user = response.data;
-                this.postUser = this.user.id
+                this.postUser = this.user.id;
             })
             .catch((errors) => {
                 console.log(errors);
-            })
+            });
         axios
             .get("/api/posts")
             .then((response) => {
                 this.posts = response.data;
                 setTimeout(() => {
-                    this.loading = false
-                }, 2000)
+                    this.loading = false;
+                }, 2000);
             })
             .catch((error) => {
                 console.log(error);
