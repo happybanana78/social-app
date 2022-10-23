@@ -70,7 +70,7 @@
                             @add-like="like"
                             @remove-like="like"
                             :post="post"
-                            :user="this.user"
+                            :user="this.sessionUser"
                         />
                     </div>
                 </div>
